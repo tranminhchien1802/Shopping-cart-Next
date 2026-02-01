@@ -1,25 +1,31 @@
+import { useState, useEffect } from 'react';
 import { useShoppingCart } from '@lib/context/shopping-cart';
 import { MainLayout } from '@components/common/main-layout';
 import { Aside } from '@components/store/aside';
 import { Listing } from '@components/store/listing';
 import { getAllProducts } from '@lib/api/products';
+import { Empty } from '@components/ui/empty';
 import type { InferGetStaticPropsType } from 'next';
 import type { Products } from '@lib/api/products';
 
-type StaticProps = {
-  props: {
-    allProducts: Products;
-  };
-};
+export async function getStaticProps(): Promise<{ props: { allProducts: Products } }> {
+  try {
+    const allProducts = await getAllProducts();
 
-export async function getStaticProps(): Promise<StaticProps> {
-  const allProducts = await getAllProducts();
-
-  return {
-    props: {
-      allProducts
-    }
-  };
+    return {
+      props: {
+        allProducts: allProducts || []
+      }
+    };
+  } catch (error) {
+    console.error('Error in getStaticProps:', error);
+    // Trả về mảng rỗng nếu có lỗi
+    return {
+      props: {
+        allProducts: []
+      }
+    };
+  }
 }
 
 export default function Store({
@@ -36,7 +42,11 @@ export default function Store({
       url='/store'
     >
       <Aside isMobile={isMobile} />
-      <Listing allProducts={allProducts} isMobile={isMobile} />
+      {allProducts && allProducts.length > 0 ? (
+        <Listing allProducts={allProducts} isMobile={isMobile} />
+      ) : (
+        <Empty searchQuery='all products' />
+      )}
     </MainLayout>
   );
 }
