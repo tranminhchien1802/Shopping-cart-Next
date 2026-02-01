@@ -14,9 +14,24 @@ export type Product = {
 export type Products = Product[];
 
 export async function getAllProducts(): Promise<Products> {
-  const res = await fetch('https://fakestoreapi.com/products');
-  const data = (await res.json()) as Products;
-  return data;
+  try {
+    const res = await fetch('https://fakestoreapi.com/products', {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
+
+    // eslint-disable-next-line curly
+    if (!res.ok)
+      throw new Error(`HTTP error! status: ${res.status}`);
+
+    const data = (await res.json()) as Products;
+    return data;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error fetching products:', error);
+    return []; // Trả về mảng rỗng nếu có lỗi
+  }
 }
 
 export type Params = {
@@ -47,7 +62,24 @@ function isInDb(id: string): boolean {
 export async function getProductData(id: string): Promise<Product | null> {
   if (!isInDb(id)) return null;
 
-  const res = await fetch(`https://fakestoreapi.com/products/${id}`);
-  const data = (await res.json()) as Product;
-  return data;
+  try {
+    const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
+
+    if (!res.ok) {
+      // eslint-disable-next-line curly
+      if (res.status === 404) return null; // Trả về null nếu sản phẩm không tồn tại
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = (await res.json()) as Product;
+    return data;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Error fetching product ${id}:`, error);
+    return null; // Trả về null nếu có lỗi
+  }
 }
