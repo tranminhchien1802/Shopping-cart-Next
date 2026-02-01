@@ -8,14 +8,36 @@ import { Empty } from '@components/ui/empty';
 import type { InferGetStaticPropsType } from 'next';
 import type { Products } from '@lib/api/products';
 
-export async function getStaticProps(): Promise<{ props: { allProducts: Products } }> {
+export async function getStaticProps(): Promise<{ props: { allProducts: Products }; revalidate?: number }> {
   try {
-    const allProducts = await getAllProducts();
+    // Thử fetch sản phẩm với retry
+    let allProducts: Products = [];
+    let attempts = 0;
+    const maxAttempts = 3;
+
+    while (attempts < maxAttempts) {
+      try {
+        allProducts = await getAllProducts();
+        // eslint-disable-next-line curly
+        if (allProducts && allProducts.length > 0) break; // Nếu có sản phẩm, thoát khỏi vòng lặp
+      } catch (error) {
+        console.error(`Attempt ${attempts + 1} failed:`, error);
+      }
+
+      attempts++;
+      // eslint-disable-next-line curly
+      if (attempts < maxAttempts) {
+        // Chờ 1 giây trước khi thử lại
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    }
 
     return {
       props: {
         allProducts: allProducts || []
-      }
+      },
+      // Revalidate sau mỗi 1 giờ để cập nhật sản phẩm mới
+      revalidate: 3600
     };
   } catch (error) {
     console.error('Error in getStaticProps:', error);
@@ -23,7 +45,8 @@ export async function getStaticProps(): Promise<{ props: { allProducts: Products
     return {
       props: {
         allProducts: []
-      }
+      },
+      revalidate: 3600
     };
   }
 }
