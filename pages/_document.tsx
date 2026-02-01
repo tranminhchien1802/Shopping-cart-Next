@@ -8,6 +8,7 @@ export default function Document(): JSX.Element {
           href='https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap'
           rel='stylesheet'
         />
+        <link rel='manifest' href='/site.webmanifest' />
       </Head>
       <body className='overflow-x-hidden bg-background font-roboto text-primary'>
         <Main />
