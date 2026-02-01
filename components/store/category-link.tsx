@@ -26,15 +26,12 @@ export function CategoryLink({
           ...(categoryName !== 'all' && { category: categoryName })
         }
       }}
+      className={cn(
+        'tab transition hover:brightness-125',
+        currentCategory && isActive && 'text-primary'
+      )}
     >
-      <a
-        className={cn(
-          'tab transition hover:brightness-125',
-          currentCategory && isActive && 'text-primary'
-        )}
-      >
-        {categoryName}
-      </a>
+      {categoryName}
     </Link>
   );
 }

@@ -95,15 +95,13 @@ export function Cart(): JSX.Element {
                       {formatCurrency(totalPrice)}
                     </span>
                   </p>
-                  <Link href='/checkout'>
-                    <a tabIndex={-1} onClick={toggleCart}>
-                      <Button
-                        Icon={MdArrowForward}
-                        label='Checkout'
-                        className='text-xl normal-case hover:!bg-inherit hover:!text-accent'
-                        flipped
-                      />
-                    </a>
+                  <Link href='/checkout' tabIndex={-1} onClick={toggleCart}>
+                    <Button
+                      Icon={MdArrowForward}
+                      label='Checkout'
+                      className='text-xl normal-case hover:!bg-inherit hover:!text-accent'
+                      flipped
+                    />
                   </Link>
                 </div>
               </div>

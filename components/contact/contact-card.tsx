@@ -29,13 +29,11 @@ export function ContactCard({
         <h2 className='text-2xl font-medium'>{title}</h2>
         <p className='font-light text-secondary'>{subtitle}</p>
       </div>
-      <Link href={navigateTo}>
-        <a className='w-full' tabIndex={-1}>
-          <Button
-            className='w-full border border-border-secondary text-sm font-medium normal-case'
-            label={buttonTitle}
-          />
-        </a>
+      <Link href={navigateTo} className='w-full' tabIndex={-1}>
+        <Button
+          className='w-full border border-border-secondary text-sm font-medium normal-case'
+          label={buttonTitle}
+        />
       </Link>
     </div>
   );

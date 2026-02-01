@@ -40,31 +40,29 @@ export function CartItem({
       })}
     >
       <div className='flex rounded-lg border border-border-primary'>
-        <Link href={toProduct}>
-          <a
-            className='tab hidden rounded-r-none transition hover:brightness-90 
-                       focus-visible:brightness-90 md:block'
-            onClick={toggleCart}
-          >
-            <ImageLoader
-              divStyle='h-[108px] w-[108px] rounded-l-lg shrink-0 shrink-0 bg-white'
-              imageStyle='!p-4'
-              src={image}
-              alt={title}
-            />
-          </a>
+        <Link
+          href={toProduct}
+          className='tab hidden rounded-r-none transition hover:brightness-90
+                     focus-visible:brightness-90 md:block'
+          onClick={toggleCart}
+        >
+          <ImageLoader
+            divStyle='h-[108px] w-[108px] rounded-l-lg shrink-0 shrink-0 bg-white'
+            imageStyle='!p-4'
+            src={image}
+            alt={title}
+          />
         </Link>
         <div className='flex w-full flex-col justify-between py-2 px-4'>
           <div>
-            <Link href={toProduct}>
-              <a
-                className='tab overflow-hidden text-ellipsis font-medium text-white/90
-                           transition [display:-webkit-box] [-webkit-line-clamp:1]
-                           [-webkit-box-orient:vertical] hover:text-white'
-                onClick={toggleCart}
-              >
-                {title}
-              </a>
+            <Link
+              href={toProduct}
+              className='tab overflow-hidden text-ellipsis font-medium text-white/90
+                         transition [display:-webkit-box] [-webkit-line-clamp:1]
+                         [-webkit-box-orient:vertical] hover:text-white'
+              onClick={toggleCart}
+            >
+              {title}
             </Link>
             <p className='font-bold'>{formatCurrency(price)}</p>
           </div>

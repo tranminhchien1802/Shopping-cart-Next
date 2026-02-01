@@ -119,24 +119,23 @@ export function Carousel(): JSX.Element {
           >
             <AnimatePresence exitBeforeEnter>
               {index === currentIndex && (
-                <Link href={`/store?category=${alt}`}>
-                  <motion.a
-                    className='absolute bottom-10 w-max'
-                    {...setTransition({
-                      typeIn: 'tween',
-                      typeOut: 'tween',
-                      distance: 20,
-                      direction: 'top',
-                      durationIn: 0.75,
-                      durationOut: 0.25
-                    })}
-                  >
-                    <Button
-                      className='!bg-black/40 !p-0 !px-1 text-lg font-normal capitalize
-                                 text-primary/90 hover:!bg-accent hover:text-primary sm:text-xl'
-                      label={alt}
-                    />
-                  </motion.a>
+                <Link
+                  href={`/store?category=${alt}`}
+                  className='absolute bottom-10 w-max'
+                  {...setTransition({
+                    typeIn: 'tween',
+                    typeOut: 'tween',
+                    distance: 20,
+                    direction: 'top',
+                    durationIn: 0.75,
+                    durationOut: 0.25
+                  })}
+                >
+                  <Button
+                    className='!bg-black/40 !p-0 !px-1 text-lg font-normal capitalize
+                               text-primary/90 hover:!bg-accent hover:text-primary sm:text-xl'
+                    label={alt}
+                  />
                 </Link>
               )}
             </AnimatePresence>

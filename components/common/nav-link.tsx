@@ -16,16 +16,17 @@ export function NavLink({
   disableScroll
 }: NavLinkProps): JSX.Element {
   return (
-    <Link href={href} key={href} scroll={!disableScroll}>
-      <a
-        className={cn(
-          'tab hover:brightness-125',
-          pathname === href && 'text-primary'
-        )}
-        onClick={disableScroll ? delayScroll : undefined}
-      >
-        {linkName}
-      </a>
+    <Link
+      href={href}
+      key={href}
+      scroll={!disableScroll}
+      className={cn(
+        'tab hover:brightness-125',
+        pathname === href && 'text-primary'
+      )}
+      onClick={disableScroll ? delayScroll : undefined}
+    >
+      {linkName}
     </Link>
   );
 }

@@ -18,13 +18,11 @@ export function Greeting(): JSX.Element {
         something you love. Thank you for choosing us.
       </p>
       <div className='mx-auto mt-1'>
-        <Link href='/store'>
-          <a tabIndex={-1}>
-            <Button
-              className='border border-border-secondary text-sm sm:text-base'
-              label='Start Shopping'
-            />
-          </a>
+        <Link href='/store' tabIndex={-1}>
+          <Button
+            className='border border-border-secondary text-sm sm:text-base'
+            label='Start Shopping'
+          />
         </Link>
       </div>
     </motion.div>
