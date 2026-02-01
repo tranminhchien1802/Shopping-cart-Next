@@ -23,7 +23,7 @@
     "curly": ["error", "multi"],
     "quotes": ["error", "single", { "avoidEscape": true }],
     "jsx-quotes": ["error", "prefer-single"],
-    "linebreak-style": ["error", "unix"],
+    "linebreak-style": "off", // Tắt quy tắc linebreak-style để tránh lỗi trên Windows
     "no-console": "warn",
     "comma-dangle": "error",
     "no-unused-expressions": "error",
