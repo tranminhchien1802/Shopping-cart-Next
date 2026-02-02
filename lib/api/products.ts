@@ -56,18 +56,36 @@ export async function getAllProductsId(): Promise<ProductsParams> {
 function isInDb(id: string): boolean {
   if (isNaN(+id)) return false;
   const num = parseInt(id, 10);
-  return num >= 1 && num <= 20;
+  return num >= 1; // Accept any positive integer ID
+}
+
+// Hàm hỗ trợ với timeout
+async function fetchWithTimeout(url: string, options: RequestInit = {}, timeout = 10000): Promise<Response> {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+    clearTimeout(id);
+    return response;
+  } catch (error) {
+    clearTimeout(id);
+    throw error;
+  }
 }
 
 export async function getProductData(id: string): Promise<Product | null> {
   if (!isInDb(id)) return null;
 
   try {
-    const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
+    const res = await fetchWithTimeout(`https://fakestoreapi.com/products/${id}`, {
       headers: {
         'Cache-Control': 'no-cache'
       }
-    });
+    }, 8000); // Timeout sau 8 giây
 
     if (!res.ok) {
       // eslint-disable-next-line curly
